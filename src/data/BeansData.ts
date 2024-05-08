@@ -39,6 +39,27 @@ const BeansData = [
     type: 'Bean',
     index: 1,
   },
+  
+  {
+    id: 'B4',
+    name: 'Excelsa Beans',
+    description: `Excelsa beans grow almost entirely in Southeast Asia, and they’re shaped somewhat like Liberica beans — elongated ovals. These beans grow on large 20 to 30-foot coffee plants at medium altitudes. In terms of flavor, Excelsa beans are pretty unique. They combine light roast traits like tart notes and fruity flavors with flavors that are more reminiscent of dark roasts.`,
+    roasted: 'Medium Roasted',
+    imagelink_square: require('../assets/coffee_assets/liberica_coffee_beans/liberica_coffee_beans_square.png'),
+    imagelink_portrait: require('../assets/coffee_assets/excelsa_coffee_beans/excelsa_coffee_beans_portrait.png'),
+    ingredients: 'Malaysia',
+    special_ingredient: 'From Malaysia',
+    prices: [
+      {size: '250gm', price: '5.50', currency: '$'},
+      {size: '500gm', price: '10.50', currency: '$'},
+      {size: '1Kg', price: '18.50', currency: '$'},
+    ],
+    average_rating: 4.7,
+    ratings_count: '6,879',
+    favourite: false,
+    type: 'Bean',
+    index: 3,
+  },
   {
     id: 'B3',
     name: 'Liberica Beans',
@@ -59,25 +80,5 @@ const BeansData = [
     type: 'Bean',
     index: 2,
   },
-  {
-    id: 'B4',
-    name: 'Excelsa Beans',
-    description: `Excelsa beans grow almost entirely in Southeast Asia, and they’re shaped somewhat like Liberica beans — elongated ovals. These beans grow on large 20 to 30-foot coffee plants at medium altitudes. In terms of flavor, Excelsa beans are pretty unique. They combine light roast traits like tart notes and fruity flavors with flavors that are more reminiscent of dark roasts.`,
-    roasted: 'Medium Roasted',
-    imagelink_square: require('../assets/coffee_assets/excelsa_coffee_beans/excelsa_coffee_beans_square.png'),
-    imagelink_portrait: require('../assets/coffee_assets/excelsa_coffee_beans/excelsa_coffee_beans_portrait.png'),
-    ingredients: 'Malaysia',
-    special_ingredient: 'From Malaysia',
-    prices: [
-      {size: '250gm', price: '5.50', currency: '$'},
-      {size: '500gm', price: '10.50', currency: '$'},
-      {size: '1Kg', price: '18.50', currency: '$'},
-    ],
-    average_rating: 4.7,
-    ratings_count: '6,879',
-    favourite: false,
-    type: 'Bean',
-    index: 3,
-  },
-];
+]
 export default BeansData;
