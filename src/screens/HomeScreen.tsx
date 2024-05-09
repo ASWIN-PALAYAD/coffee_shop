@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -52,6 +53,8 @@ const getCoffeeList = (category: any, data: any) => {
 const HomeScreen = ({navigation}:any) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList);
+  const addToCart = useStore((state: any) => state.addToCart);
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
 
   const [categories, setCategories] = useState(
     getCategoriesFromData(CoffeeData),
@@ -91,6 +94,31 @@ const HomeScreen = ({navigation}:any) => {
     setSetsortedCoffe([...CoffeeList]);
     setSearchText('');
   }
+
+  const CoffeeCardAddToCart = ({
+    id,
+    index,
+    name,
+    roasted,
+    imagelink_square,
+    special_ingredient,
+    type,
+    price,
+  }: any) => {
+    addToCart({
+      id,
+      index,
+      name,
+      roasted,
+      imagelink_square,
+      special_ingredient,
+      type,
+      prices: [{...price, quantity: 1}],
+    });
+    calculateCartPrice();
+    ToastAndroid.showWithGravity(`${name} is Added to Cart`, ToastAndroid.SHORT,ToastAndroid.CENTER)
+  };
+
 
 
 
@@ -213,7 +241,7 @@ const HomeScreen = ({navigation}:any) => {
                average_rating={item.average_rating}
                type={item.type}
                index={item.index}
-               buttonPressHandler={()=>{}} 
+               buttonPressHandler={CoffeeCardAddToCart} 
               />
             </TouchableOpacity>
           }}
@@ -245,7 +273,7 @@ const HomeScreen = ({navigation}:any) => {
                average_rating={item.average_rating}
                type={item.type}
                index={item.index}
-               buttonPressHandler={()=>{}} 
+               buttonPressHandler={CoffeeCardAddToCart} 
               />
             </TouchableOpacity>
           }}

@@ -74,7 +74,6 @@ export const useStore = create(
       addToFavoriteList: (type: string, id: string) =>
         set(
           produce(state => {
-            console.log(type,id);
             
             if (type == 'Coffee') {
               for (let i = 0; i < state.CoffeeList.length; i++) {
