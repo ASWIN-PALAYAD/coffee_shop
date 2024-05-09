@@ -1,4 +1,5 @@
 import {
+  Dimensions,
   FlatList,
   ScrollView,
   StyleSheet,
@@ -46,7 +47,9 @@ const getCoffeeList = (category: any, data: any) => {
   }
 };
 
-const HomeScreen = () => {
+
+
+const HomeScreen = ({navigation}:any) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList);
 
@@ -65,6 +68,32 @@ const HomeScreen = () => {
   const ListRef:any = useRef<FlatList>()
   const tabBarHeight = useBottomTabBarHeight();
 
+
+  const searchCoffee = (search:string) => {
+    if(search != ''){
+      ListRef?.current?.scrollToOffset({
+        animated:true,
+        offset:0,
+      });
+      setCategoryIndex({index:0,category:categories[0]});
+      setSetsortedCoffe([...CoffeeList.filter((item:any)=>
+        item.name.toLowerCase().includes(search.toLowerCase()),
+      )])
+    }
+  }
+
+  const resetSearchCoffee = () => {
+    ListRef?.current?.scrollToOffset({
+      animated:true,
+      offset:0,
+    });
+    setCategoryIndex({index:0,category:categories[0]});
+    setSetsortedCoffe([...CoffeeList]);
+    setSearchText('');
+  }
+
+
+
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryGreyHex} />
@@ -80,7 +109,7 @@ const HomeScreen = () => {
 
         {/* search input */}
         <View style={styles.InputContainerComponent}>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {searchCoffee(searchText)}}>
             <CustomIcon
               name="search"
               size={FONTSIZE.size_18}
@@ -95,12 +124,15 @@ const HomeScreen = () => {
           <TextInput
             placeholder="Find your coffee...."
             value={searchText}
-            onChangeText={text => setSearchText(text)}
+            onChangeText={text => {
+              setSearchText(text);
+              searchCoffee(text)
+            }}
             placeholderTextColor={COLORS.primaryLightGreyHex}
             style={styles.TextInputContainer}
           />
           {searchText?.length > 0 ? (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>{resetSearchCoffee()}}>
               <CustomIcon name='close' size={FONTSIZE.size_16} color={COLORS.primaryLightGreyHex} 
                 style={styles.InputIcon}
               />
@@ -154,12 +186,23 @@ const HomeScreen = () => {
         <FlatList 
           ref={ListRef}
           horizontal
+          ListEmptyComponent={
+            <View style={styles.EmptyListContainer}>
+              <Text style={styles.CategoryText}>No Coffee found</Text>
+            </View>
+          }
           showsHorizontalScrollIndicator={false}
           data={sortedCoffe}
           contentContainerStyle={styles.FlatListContainer}
           keyExtractor={(item)=>item.id}
           renderItem={({item})=>{
-            return <TouchableOpacity onPress={()=> {}}>
+            return <TouchableOpacity onPress={()=> {
+              navigation.push('Details',{
+                index:item.index,
+                id:item.id,
+                type:item.type
+              });
+            }}>
               <CoffeeCard
                id={item.id}
                name={item.name}
@@ -185,7 +228,13 @@ const HomeScreen = () => {
           contentContainerStyle={[styles.FlatListContainer,{marginBottom:tabBarHeight}]}
           keyExtractor={(item)=>item.id}
           renderItem={({item})=>{
-            return <TouchableOpacity onPress={()=> {}}>
+            return <TouchableOpacity onPress={()=> {
+              navigation.push('Details',{
+                index:item.index,
+                id:item.id,
+                type:item.type
+              });
+            }}>
               <CoffeeCard
                id={item.id}
                name={item.name}
@@ -266,6 +315,12 @@ const styles = StyleSheet.create({
     gap:SPACING.space_20,
     paddingVertical:SPACING.space_20,
     paddingHorizontal:SPACING.space_30
+  },
+  EmptyListContainer:{
+    width:Dimensions.get('window').width - SPACING.space_30*2,
+    alignItems:'center',
+    justifyContent:'center',
+    paddingVertical:SPACING.space_36*3
   },
   CoffeeBeansTitle:{
     fontSize:FONTSIZE.size_18,
