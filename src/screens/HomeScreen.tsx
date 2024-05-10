@@ -103,7 +103,7 @@ const HomeScreen = ({navigation}:any) => {
     imagelink_square,
     special_ingredient,
     type,
-    price,
+    prices,
   }: any) => {
     addToCart({
       id,
@@ -113,7 +113,7 @@ const HomeScreen = ({navigation}:any) => {
       imagelink_square,
       special_ingredient,
       type,
-      prices: [{...price, quantity: 1}],
+      prices,
     });
     calculateCartPrice();
     ToastAndroid.showWithGravity(`${name} is Added to Cart`, ToastAndroid.SHORT,ToastAndroid.CENTER)
@@ -237,7 +237,7 @@ const HomeScreen = ({navigation}:any) => {
                roasted={item.roasted}
                imagelink_square={item?.imagelink_square}
                special_ingredient={item.special_ingredient}
-               prices={item.prices[2]}
+               price={item.prices[2]}
                average_rating={item.average_rating}
                type={item.type}
                index={item.index}
@@ -269,7 +269,7 @@ const HomeScreen = ({navigation}:any) => {
                roasted={item.roasted}
                imagelink_square={item.imagelink_square}
                special_ingredient={item.special_ingredient}
-               prices={item.prices[2]}
+               price={item.prices[2]}
                average_rating={item.average_rating}
                type={item.type}
                index={item.index}
