@@ -11,9 +11,9 @@ export const useStore = create(
       CoffeeList: CoffeeData,
       BeanList: BeansData,
       CartPrice: 0,
-      FavouriteList: [],
+      FavoritesList: [],
       CartList: [],
-      orderHistoryList: [],
+      OrderHistoryList: [],
       addToCart: (cartItem: any) =>
         set(
           produce(state => {
@@ -51,7 +51,6 @@ export const useStore = create(
             }
           }),
         ),
-
       calculateCartPrice: () =>
         set(
           produce(state => {
@@ -70,7 +69,6 @@ export const useStore = create(
             state.CartPrice = totalprice.toFixed(2).toString();
           }),
         ),
-
       addToFavoriteList: (type: string, id: string) =>
         set(
           produce(state => {
@@ -79,7 +77,7 @@ export const useStore = create(
                 if (state.CoffeeList[i].id == id) {
                   if (state.CoffeeList[i].favourite == false) {
                     state.CoffeeList[i].favourite = true;
-                    state.FavouriteList.unshift(state.CoffeeList[i]);
+                    state.FavoritesList.unshift(state.CoffeeList[i]);
                   } else {
                     state.CoffeeList[i].favourite = false;
                   }
@@ -91,7 +89,7 @@ export const useStore = create(
                 if (state.BeanList[i].id == id) {
                   if (state.BeanList[i].favourite == false) {
                     state.BeanList[i].favourite = true;
-                    state.FavoriteList.unshift(state.BeanList[i]);
+                    state.FavoritesList.unshift(state.BeanList[i]);
                   } else {
                     state.BeanList[i].favourite = false;
                   }
@@ -101,7 +99,6 @@ export const useStore = create(
             }
           }),
         ),
-
       deleteFromFavoriteList: (type: string, id: string) =>
         set(
           produce(state => {
@@ -129,16 +126,15 @@ export const useStore = create(
               }
             }
             let spliceIndex = -1;
-            for (let i = 0; i < state.FavoriteList?.length; i++) {
-              if (state.FavoriteList[i].id == id) {
+            for (let i = 0; i < state.FavoritesList.length; i++) {
+              if (state.FavoritesList[i].id == id) {
                 spliceIndex = i;
                 break;
               }
             }
-            state.FavoriteList?.splice(spliceIndex, 1);
+            state.FavoritesList.splice(spliceIndex, 1);
           }),
         ),
-
       incrementCartItemQuantity: (id: string, size: string) =>
         set(
           produce(state => {
@@ -148,7 +144,7 @@ export const useStore = create(
                   if (state.CartList[i].prices[j].size == size) {
                     state.CartList[i].prices[j].quantity++;
                     break;
-                  } 
+                  }
                 }
               }
             }
